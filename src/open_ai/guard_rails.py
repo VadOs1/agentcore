@@ -11,7 +11,7 @@ from agents import (
 )
 from pydantic import BaseModel
 
-from src.open_ai.constants import guardrail_instructions
+from src.open_ai.constants import guardrail_instructions, guardrail_name
 
 
 class GuardOutput(BaseModel):
@@ -20,7 +20,7 @@ class GuardOutput(BaseModel):
 
 
 guardrail_agent = Agent(
-    name="Guardrail",
+    name=guardrail_name,
     instructions=(
         guardrail_instructions
     ),
