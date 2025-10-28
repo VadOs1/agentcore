@@ -21,3 +21,12 @@ curl https://api.openai.com/v1/vector_stores/{id} \
   -X DELETE
 ```
 
+- AgentCore Invoke Local
+
+```
+curl --location 'localhost:8080/invocations' \
+--header 'Content-Type: application/json' \
+--data '{
+    "prompt": "hi"
+}'
+```
