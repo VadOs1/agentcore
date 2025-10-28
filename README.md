@@ -32,3 +32,5 @@ curl --location 'localhost:8080/invocations' \
     "prompt": "hi"
 }'
 ```
+
+- CloudWatch -> Application Signals (APM) -> Transaction Search -> Enable Transaction Search
