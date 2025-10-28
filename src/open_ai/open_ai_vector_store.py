@@ -1,7 +1,5 @@
 from openai import OpenAI
 
-from src.open_ai.open_ai_get_vector_store import get_vector_store_id_by_name
-
 
 def create_vector_store(client: OpenAI, vector_store_name: str):
     vector_store = client.vector_stores.create(name=vector_store_name)
@@ -20,3 +18,8 @@ def create_vector_store(client: OpenAI, vector_store_name: str):
     vector_store_id = get_vector_store_id_by_name(client, vector_store_name)
     print(f'Vector store id retrieved: {vs_file.vector_store_id}')
     return vector_store_id
+
+
+def get_vector_store_id_by_name(client: OpenAI, name: str, limit: int = 50) -> str:
+    page = client.vector_stores.list(limit=limit)
+    return next((vs.id for vs in page.data if vs.name == name), None)

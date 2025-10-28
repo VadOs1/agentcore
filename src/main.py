@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from openai import OpenAI
-from src.open_ai.open_ai_create_vector_store import create_vector_store
+from src.open_ai.open_ai_vector_store import create_vector_store
 
 if __name__ == "__main__":
     load_dotenv()
