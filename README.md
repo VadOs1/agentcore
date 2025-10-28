@@ -40,3 +40,5 @@ curl --location 'localhost:8080/invocations' \
 - agentcore configure -e ./src/main_agent_core.py
 - agentcore launch --auto-update-on-conflict --env OPENAI_API_KEY=$OPENAI_API_KEY
 - agentcore invoke '{\"prompt\": \"Hi"}'
+- agentcore destroy
+- manually delete agentcore memory
