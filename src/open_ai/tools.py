@@ -5,7 +5,7 @@ from typing import Any
 
 from agents import Agent, function_tool, ModelSettings
 
-from src.open_ai.constants import tool_name, tool_instructions
+from constants import tool_name, tool_instructions
 
 _ALLOWED_OPS = {
     ast.Add: _op.add,
