@@ -1,5 +1,6 @@
 .bedrock_agentcore.yaml
-./src/.dockerignore
 .env
 .idea
 .venv
+/.bedrock_agentcore
+/src/.dockerignore
