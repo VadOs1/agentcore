@@ -11,7 +11,7 @@ from agents import (
 )
 from pydantic import BaseModel
 
-from constants import guardrail_instructions, guardrail_name
+from .constants import guardrail_instructions, guardrail_name
 
 
 class GuardOutput(BaseModel):

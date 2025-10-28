@@ -1,7 +1,7 @@
 from agents import WebSearchTool, FileSearchTool
 from openai import OpenAI
 
-from open_ai_vector_store import get_vector_store_id_by_name
+from .open_ai_vector_store import get_vector_store_id_by_name
 
 
 def get_open_ai_tools(client: OpenAI, vector_store_name: str):
