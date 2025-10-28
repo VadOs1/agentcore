@@ -1,3 +1,5 @@
+.bedrock_agentcore.yaml
+./src/.dockerignore
 .env
 .idea
 .venv
