@@ -47,9 +47,11 @@ curl --location 'localhost:8080/invocations' \
 - agentcore destroy
 - manually delete agentcore memory
 
-export AWS_REGION=us-east-1 ECR_REPO=agentcore && \
-export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text) && \
-aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com && \
-docker build -t $ECR_REPO . && \
-docker tag $ECR_REPO:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:latest && \
-docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPO:latest
+
+### Create ECR Image for AWS Agent Core (main_strands.py)
+- export AWS_REGION=us-east-1 ECR_REPO=agentcore
+- export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+- aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com &&
+- docker build -t $ECR_REPO .
+- docker tag agentcore:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/agentcore:latest
+- docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/agentcore:latest
