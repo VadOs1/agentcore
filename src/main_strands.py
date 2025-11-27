@@ -17,19 +17,13 @@ You can search for information in Jira and GitHub.
 
 @app.entrypoint
 def start(payload):
-    global naming_agent, github_mcp_tools
-    
     user_message = payload.get("prompt", "Hi")
-    
-    # Run agent within MCP context
-    with github_mcp_tools:
-        result = naming_agent.run(user_message)
-    
+    result = naming_agent.run(user_message)
     return {"result": result}
     
 if __name__ == '__main__':
     print("Initializing GitHub MCP tools (this may take a moment)...")
-    github_mcp_tools = MCPClient(
+    github_mcp_client = MCPClient(
         lambda: stdio_client(
             StdioServerParameters(
                 command="npx",
@@ -42,15 +36,16 @@ if __name__ == '__main__':
         ),
         startup_timeout=30,
     )
+
+    with github_mcp_client:
+        github_tool_list = github_mcp_client.list_tools_sync()
+        print(f"✓ Loaded {len(github_tool_list)} GitHub tools")
     
-    github_tool_list = github_mcp_tools.list_tools_sync()
-    print(f"✓ Loaded {len(github_tool_list)} GitHub tools")
-    
-    # Create agent with MCP tools
-    naming_agent = Agent(
-        system_prompt=NAMING_SYSTEM_PROMPT,
-        model="anthropic.claude-sonnet-4-20250514-v1:0",
-        tools=github_tool_list,
-    )
+        # Create agent with MCP tools
+        naming_agent = Agent(
+            system_prompt=NAMING_SYSTEM_PROMPT,
+            model="anthropic.claude-sonnet-4-20250514-v1:0",
+            tools=github_tool_list,
+        )
     app.run()
         
