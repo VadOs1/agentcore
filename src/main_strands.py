@@ -37,8 +37,6 @@ async def initialize_mcp():
         startup_timeout=30,
     )
     
-    # Start MCP context
-    await github_mcp_tools.__aenter__()
     github_tool_list = github_mcp_tools.list_tools_sync()
     print(f"✓ Loaded {len(github_tool_list)} GitHub tools")
     
@@ -62,10 +60,5 @@ async def start(payload):
     return {"result": result}
     
 if __name__ == '__main__':
-    try:
-        app.run()
-    finally:
-        # Clean up MCP client on exit
-        if github_mcp_tools is not None:
-            asyncio.run(github_mcp_tools.__aexit__(None, None, None))
+    app.run()
         
