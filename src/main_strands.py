@@ -10,19 +10,13 @@ import asyncio
 app = BedrockAgentCoreApp()
 
 NAMING_SYSTEM_PROMPT = """
-You are an assistant that helps Scrum Leaders by providing insights and information to facilitate their decisions.
-You can search for information in Jira and GitHub.
+You are an expert in GitHub and you can check any Pull Request and provide valuable feedback.
 """
-
 
 @app.entrypoint
 def start(payload):
     user_message = payload.get("prompt", "Hi")
-    result = naming_agent.run(user_message)
-    return {"result": result}
     
-if __name__ == '__main__':
-    print("Initializing GitHub MCP tools (this may take a moment)...")
     github_mcp_client = MCPClient(
         lambda: stdio_client(
             StdioServerParameters(
@@ -39,13 +33,16 @@ if __name__ == '__main__':
 
     with github_mcp_client:
         github_tool_list = github_mcp_client.list_tools_sync()
-        print(f"✓ Loaded {len(github_tool_list)} GitHub tools")
-    
-        # Create agent with MCP tools
+        
         naming_agent = Agent(
             system_prompt=NAMING_SYSTEM_PROMPT,
-            model="anthropic.claude-sonnet-4-20250514-v1:0",
+            model="us.anthropic.claude-sonnet-4-20250514-v1:0",  # Use inference profile
             tools=github_tool_list,
         )
-    app.run()
         
+        result = naming_agent(user_message)
+        return {"result": result}
+
+    
+if __name__ == '__main__':
+    app.run()
