@@ -14,14 +14,20 @@ You are an assistant that helps Scrum Leaders by providing insights and informat
 You can search for information in Jira and GitHub.
 """
 
-# Global variables for MCP client and agent
-github_mcp_tools = None
-naming_agent = None
 
-async def initialize_mcp():
-    """Initialize MCP client and agent"""
-    global github_mcp_tools, naming_agent
+@app.entrypoint
+def start(payload):
+    global naming_agent, github_mcp_tools
     
+    user_message = payload.get("prompt", "Hi")
+    
+    # Run agent within MCP context
+    with github_mcp_tools:
+        result = naming_agent.run(user_message)
+    
+    return {"result": result}
+    
+if __name__ == '__main__':
     print("Initializing GitHub MCP tools (this may take a moment)...")
     github_mcp_tools = MCPClient(
         lambda: stdio_client(
@@ -46,23 +52,5 @@ async def initialize_mcp():
         model="anthropic.claude-sonnet-4-20250514-v1:0",
         tools=github_tool_list,
     )
-
-@app.entrypoint
-async def start(payload):
-    global naming_agent, github_mcp_tools
-    
-    # Initialize on first request if not already initialized
-    if naming_agent is None:
-        await initialize_mcp()
-    
-    user_message = payload.get("prompt", "Hi")
-    
-    # Run agent within MCP context
-    async with github_mcp_tools:
-        result = await naming_agent.run(user_message)
-    
-    return {"result": result}
-    
-if __name__ == '__main__':
     app.run()
         
