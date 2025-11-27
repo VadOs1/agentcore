@@ -49,14 +49,18 @@ async def initialize_mcp():
 
 @app.entrypoint
 async def start(payload):
-    global naming_agent
+    global naming_agent, github_mcp_tools
     
     # Initialize on first request if not already initialized
     if naming_agent is None:
         await initialize_mcp()
     
     user_message = payload.get("prompt", "Hi")
-    result = await naming_agent.run(user_message)
+    
+    # Run agent within MCP context
+    async with github_mcp_tools:
+        result = await naming_agent.run(user_message)
+    
     return {"result": result}
     
 if __name__ == '__main__':
