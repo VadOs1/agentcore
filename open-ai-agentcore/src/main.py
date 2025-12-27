@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 from app.config import vector_store_name, main_agent_name, main_agent_instructions
-from app.guard_rails import guardrail
+from app.guard_rail import guardrail
 from app.config import get_open_ai_tools
 from app.vector_store import create_vector_store
 from app.calculator_tull import calculator_agent

@@ -5,7 +5,6 @@ from typing import Any
 
 from agents import Agent, function_tool, ModelSettings
 
-from config import tool_name, tool_instructions
 
 _ALLOWED_OPS = {
     ast.Add: _op.add,
@@ -42,8 +41,12 @@ def eval_expression(expression: str) -> str:
 
 
 calculator_agent = Agent(
-    name=tool_name,
-    instructions=tool_instructions,
+    name="Calculator",
+    instructions="""
+You are a precise calculator.
+When handed arithmetic, call the eval_expression tool and return only the final numeric result.
+No prose unless asked.
+""",
     tools=[eval_expression],
     model_settings=ModelSettings(temperature=0),
 )
