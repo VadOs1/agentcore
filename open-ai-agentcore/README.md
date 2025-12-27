@@ -21,7 +21,7 @@ curl https://api.openai.com/v1/vector_stores/{id} \
 
 - Run script from local
 ```python
-python ./open-ai-agentcore/src/0_local.py 
+python ./open-ai-agentcore/0_local.py 
 ```
 - Deploy to Amazon Bedrock AgentCore
 !!!!!!!!
