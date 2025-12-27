@@ -1,5 +1,6 @@
 import os
 from bedrock_agentcore import BedrockAgentCoreApp
+from dotenv import load_dotenv
 from strands import Agent
 from strands.tools.mcp import MCPClient
 from mcp import stdio_client, StdioServerParameters
@@ -44,4 +45,5 @@ def start(payload):
 
 
 if __name__ == "__main__":
+    load_dotenv(override=True)
     app.run()
