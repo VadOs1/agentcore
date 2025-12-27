@@ -5,7 +5,7 @@ from typing import Any
 
 from agents import Agent, function_tool, ModelSettings
 
-from src.config import tool_name, tool_instructions
+from config import tool_name, tool_instructions
 
 _ALLOWED_OPS = {
     ast.Add: _op.add,
