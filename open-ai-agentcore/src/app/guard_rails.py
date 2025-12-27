@@ -11,8 +11,6 @@ from agents import (
 )
 from pydantic import BaseModel
 
-from config import guardrail_instructions, guardrail_name
-
 
 class GuardOutput(BaseModel):
     is_blocked: bool
