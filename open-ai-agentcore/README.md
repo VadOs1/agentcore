@@ -30,7 +30,7 @@ python ./open-ai-agentcore/src/0_local.py
 - unzip awscliv2.zip
 - sudo ./aws/install
 - aws configure
-- source .env
+- source ./open-ai-agentcore/.env
 - agentcore configure -e ./src/main_agent_core.py
 - agentcore launch --auto-update-on-conflict --env OPENAI_API_KEY=$OPENAI_API_KEY
 - agentcore invoke '{\"prompt\": \"Hi"}'
