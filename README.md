@@ -9,3 +9,5 @@
 #### OpenAI Vector Store API reference  https://platform.openai.com/docs/api-reference/vector-stores/list
 
 CloudWatch -> Application Signals (APM) -> Transaction Search -> Enable Transaction Search
+
+TODO: Add links to open-ai-agentcore and strands-agentcore
