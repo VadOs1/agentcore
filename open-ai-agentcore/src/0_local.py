@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 from app.open_ai_vector_store import create_vector_store, get_vector_store_id
-from app.calculator_tool import calculator_agent
+from app.calculator_tool import calculator
 from app.dragon_family_guard_rail import guardrail
 
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
             ),
         ],
         input_guardrails=[guardrail],
-        handoffs=[calculator_agent],
+        handoffs=[calculator],
         model_settings=ModelSettings(temperature=0),
     )
     asyncio.run(main())
