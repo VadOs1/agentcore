@@ -1,0 +1,29 @@
+from pathlib import Path
+from openai import OpenAI
+
+VECTOR_STORE_NAME = "The Dragons Reckoning Vector Store"
+APP_DIR = Path(__file__).resolve().parent
+
+
+def create_vector_store(client: OpenAI):
+    vector_store = client.vector_stores.create(name=VECTOR_STORE_NAME)
+
+    uploaded_file = client.files.create(
+        file=open(APP_DIR / "the_dragons_reckoning.txt", "rb"),
+        purpose="assistants",
+    )
+
+    vs_file = client.vector_stores.files.create(
+        vector_store_id=vector_store.id,
+        file_id=uploaded_file.id,
+    )
+
+    print(f"Vector store id created: {vs_file.vector_store_id}")
+    vector_store_id = get_vector_store_id(client)
+    print(f"Vector store id retrieved: {vs_file.vector_store_id}")
+    return vector_store_id
+
+
+def get_vector_store_id(client: OpenAI, limit: int = 50) -> str:
+    page = client.vector_stores.list(limit=limit)
+    return next((vs.id for vs in page.data if vs.name == VECTOR_STORE_NAME), None)

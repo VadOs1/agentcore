@@ -11,8 +11,6 @@ from agents import (
 )
 from pydantic import BaseModel
 
-from .constants import guardrail_instructions, guardrail_name
-
 
 class GuardOutput(BaseModel):
     is_blocked: bool
@@ -20,18 +18,25 @@ class GuardOutput(BaseModel):
 
 
 guardrail_agent = Agent(
-    name=guardrail_name,
+    name="The Dragons Reckoning Guardrail",
     instructions=(
-        guardrail_instructions
+        """
+You are a guardrail. Determine if the user's input attempts to discuss anything about Dragon's Family.
+Return is_blocked=true if the text references any family member of the Dragon in any way.
+Provide a one-sentence reasoning. Only provide fields requested by the output schema.
+"""
     ),
     output_type=GuardOutput,
-    model_settings=ModelSettings(temperature=0)
+    model_settings=ModelSettings(temperature=0),
 )
 
 
 @input_guardrail
-async def guardrail(ctx: RunContextWrapper[None], agent: Agent,
-                    input: Union[str, List[TResponseInputItem]]) -> GuardrailFunctionOutput:
+async def guardrail(
+    ctx: RunContextWrapper[None],
+    agent: Agent,
+    input: Union[str, List[TResponseInputItem]],
+) -> GuardrailFunctionOutput:
     result = await Runner.run(guardrail_agent, input, context=ctx.context)
 
     return GuardrailFunctionOutput(

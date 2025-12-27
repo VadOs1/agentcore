@@ -1,6 +1,3 @@
-.bedrock_agentcore.yaml
-.env
-.idea
+.ruff_cache
 .venv
-/.bedrock_agentcore
-/src/.dockerignore
+__pycache__/
