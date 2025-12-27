@@ -26,6 +26,9 @@ python ./open-ai-agentcore/src/0_local.py
 - Deploy to Amazon Bedrock AgentCore
 !!!!!!!!
 ```python
+- curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+- unzip awscliv2.zip
+- sudo ./aws/install
 - aws configure
 - source .env
 - agentcore configure -e ./src/main_agent_core.py
