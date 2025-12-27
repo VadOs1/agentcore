@@ -40,7 +40,7 @@ def eval_expression(expression: str) -> str:
         return f"Error: {e}"
 
 
-calculator_agent = Agent(
+calculator = Agent(
     name="Calculator",
     instructions="""
 You are a precise calculator.
