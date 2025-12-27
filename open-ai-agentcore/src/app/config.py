@@ -1,4 +1,7 @@
 from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
+from agents import WebSearchTool, FileSearchTool
+from openai import OpenAI
+from vector_store import get_vector_store_id_by_name
 
 vector_store_name = 'The Dragons Reckoning Vector Store'
 main_agent_name = 'The Dragons Reckoning Agent'
@@ -18,3 +21,14 @@ You are a precise calculator.
 When handed arithmetic, call the eval_expression tool and return only the final numeric result.
 No prose unless asked.
 """
+
+def get_open_ai_tools(client: OpenAI, vector_store_name: str):
+    return [
+        WebSearchTool(),
+        FileSearchTool(
+            vector_store_ids=[
+                get_vector_store_id_by_name(client=client, name=vector_store_name)
+            ],
+            max_num_results=3,
+        ),
+    ]

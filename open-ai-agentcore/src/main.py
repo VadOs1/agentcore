@@ -12,9 +12,9 @@ from openai import OpenAI
 
 from app.config import vector_store_name, main_agent_name, main_agent_instructions
 from app.guard_rails import guardrail
-from app.tools import get_open_ai_tools
+from app.config import get_open_ai_tools
 from app.vector_store import create_vector_store
-from app.tools import calculator_agent
+from app.calculator_tull import calculator_agent
 
 
 async def main():
