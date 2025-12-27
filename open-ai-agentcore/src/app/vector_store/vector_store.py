@@ -5,7 +5,7 @@ def create_vector_store(client: OpenAI, vector_store_name: str):
     vector_store = client.vector_stores.create(name='The Dragons Reckoning Vector Store')
 
     uploaded_file = client.files.create(
-        file=open('open_ai/the_dragons_reckoning.txt', 'rb'),
+        file=open('the_dragons_reckoning.txt', 'rb'),
         purpose='assistants',
     )
 
