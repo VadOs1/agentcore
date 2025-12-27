@@ -1,4 +1,6 @@
-## agentcore
+## open-ai-agentcore
+
+python ./open-ai-agentcore/src/0_local.py
 
 #### Amazon Bedrock AgentCore Documentation https://docs.aws.amazon.com/bedrock-agentcore/
 
