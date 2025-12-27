@@ -3,4 +3,3 @@ bedrock-agentcore-starter-toolkit==0.1.26
 openai==2.6.1
 openai-agents==0.4.2
 python-dotenv==1.2.1
-ruff
