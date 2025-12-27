@@ -1,6 +1,5 @@
 import os
 from bedrock_agentcore import BedrockAgentCoreApp
-from dotenv import load_dotenv
 from strands import Agent
 from strands.tools.mcp import MCPClient
 from mcp import stdio_client, StdioServerParameters
@@ -15,7 +14,7 @@ You are an expert in GitHub and you can check any Pull Request and provide valua
 
 @app.entrypoint
 def start(payload):
-    user_message = payload.get("prompt", "List all my personal private GitHub repositories. Github username vados1")
+    user_message = payload.get("prompt", "List all my personal private GitHub repositories. Github username vados1. You are authenticated to github")
 
     github_mcp_client = MCPClient(
         lambda: stdio_client(
@@ -45,5 +44,4 @@ def start(payload):
 
 
 if __name__ == "__main__":
-    load_dotenv(override=True)
     app.run()

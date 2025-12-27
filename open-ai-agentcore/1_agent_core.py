@@ -11,7 +11,6 @@ from agents import (
     ModelSettings,
 )
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
-from dotenv import load_dotenv
 from openai import OpenAI
 
 from app.dragon_family_guard_rail import guardrail
@@ -34,7 +33,6 @@ async def invoke(payload):
 
 
 if __name__ == "__main__":
-    load_dotenv()
     api_key = os.environ.get("OPENAI_API_KEY")
     client = OpenAI(api_key=api_key)
     vector_store_id = os.environ.get("OPENAI_VECTOR_STORE_ID")
