@@ -16,11 +16,11 @@ def create_vector_store(client: OpenAI):
     )
 
     print(f'Vector store id created: {vs_file.vector_store_id}')
-    vector_store_id = get_vector_store_id_by_name(client, VECTOR_STORE_NAME)
+    vector_store_id = get_vector_store_id(client, VECTOR_STORE_NAME)
     print(f'Vector store id retrieved: {vs_file.vector_store_id}')
     return vector_store_id
 
 
-def get_vector_store_id_by_name(client: OpenAI, name: str, limit: int = 50) -> str:
+def get_vector_store_id(client: OpenAI, limit: int = 50) -> str:
     page = client.vector_stores.list(limit=limit)
-    return next((vs.id for vs in page.data if vs.name == name), None)
+    return next((vs.id for vs in page.data if vs.name == VECTOR_STORE_NAME), None)
