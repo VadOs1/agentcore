@@ -46,4 +46,5 @@ def start(payload):
 
 
 if __name__ == "__main__":
+    load_dotenv()
     app.run()
