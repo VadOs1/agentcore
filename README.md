@@ -10,4 +10,5 @@
 
 CloudWatch -> Application Signals (APM) -> Transaction Search -> Enable Transaction Search
 
-TODO: Add links to open-ai-agentcore and strands-agentcore
+- [open-ai-agentcore example](./open-ai-agentcore/README.md)
+- [strands-agentcore example](./strands-agentcore/README.md)
