@@ -7,3 +7,5 @@
 #### Bedrock AgentCore Starter Toolkit https://github.com/aws/bedrock-agentcore-starter-toolkit
 
 #### OpenAI Vector Store API reference  https://platform.openai.com/docs/api-reference/vector-stores/list
+
+CloudWatch -> Application Signals (APM) -> Transaction Search -> Enable Transaction Search

@@ -23,8 +23,17 @@ curl https://api.openai.com/v1/vector_stores/{id} \
 ```python
 python ./open-ai-agentcore/src/0_local.py 
 ```
-
-
+- Deploy to Amazon Bedrock AgentCore
+!!!!!!!!
+```python
+- aws configure
+- source .env
+- agentcore configure -e ./src/main_agent_core.py
+- agentcore launch --auto-update-on-conflict --env OPENAI_API_KEY=$OPENAI_API_KEY
+- agentcore invoke '{\"prompt\": \"Hi"}'
+- agentcore destroy
+- manually delete agentcore memory
+```
 
 
 
@@ -45,15 +54,9 @@ curl --location 'localhost:8080/invocations' \
 }'
 ```
 
-- CloudWatch -> Application Signals (APM) -> Transaction Search -> Enable Transaction Search
 
-- aws configure
-- source .env
-- agentcore configure -e ./src/main_agent_core.py
-- agentcore launch --auto-update-on-conflict --env OPENAI_API_KEY=$OPENAI_API_KEY
-- agentcore invoke '{\"prompt\": \"Hi"}'
-- agentcore destroy
-- manually delete agentcore memory
+
+
 
 
 ### Create ECR Image for AWS Agent Core (main_strands.py)
