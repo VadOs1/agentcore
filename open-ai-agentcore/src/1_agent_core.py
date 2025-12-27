@@ -37,7 +37,7 @@ if __name__ == "__main__":
     load_dotenv()
     api_key = os.environ.get("OPENAI_API_KEY")
     client = OpenAI(api_key=api_key)
-    vector_store_id = create_vector_store(client)
+    vector_store_id = os.environ.get("OPENAI_VECTOR_STORE_ID")
     data_agent = Agent(
         name="The Dragons Reckoning Agent",
         instructions=(
