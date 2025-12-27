@@ -10,7 +10,7 @@ You are an expert in GitHub and you can check any Pull Request and provide valua
 
 
 def start(payload={}):
-    user_message = payload.get("prompt", "Hi")
+    user_message = payload.get("prompt", "List all my personal GitHub repositories.")
 
     github_mcp_client = MCPClient(
         lambda: stdio_client(
