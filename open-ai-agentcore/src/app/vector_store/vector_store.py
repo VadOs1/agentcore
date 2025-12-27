@@ -1,8 +1,9 @@
 from openai import OpenAI
 
+VECTOR_STORE_NAME = "The Dragons Reckoning Vector Store"
 
-def create_vector_store(client: OpenAI, vector_store_name: str):
-    vector_store = client.vector_stores.create(name='The Dragons Reckoning Vector Store')
+def create_vector_store(client: OpenAI):
+    vector_store = client.vector_stores.create(name=VECTOR_STORE_NAME)
 
     uploaded_file = client.files.create(
         file=open('the_dragons_reckoning.txt', 'rb'),
@@ -15,7 +16,7 @@ def create_vector_store(client: OpenAI, vector_store_name: str):
     )
 
     print(f'Vector store id created: {vs_file.vector_store_id}')
-    vector_store_id = get_vector_store_id_by_name(client, vector_store_name)
+    vector_store_id = get_vector_store_id_by_name(client, VECTOR_STORE_NAME)
     print(f'Vector store id retrieved: {vs_file.vector_store_id}')
     return vector_store_id
 
