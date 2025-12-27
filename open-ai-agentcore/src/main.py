@@ -10,11 +10,11 @@ from agents import (
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from open_ai.constants import vector_store_name, main_agent_name, main_agent_instructions
-from open_ai.guard_rails import guardrail
-from open_ai.open_ai_tools import get_open_ai_tools
-from open_ai.open_ai_vector_store import create_vector_store
-from open_ai.tools import calculator_agent
+from app.config import vector_store_name, main_agent_name, main_agent_instructions
+from app.guard_rails import guardrail
+from app.tools import get_open_ai_tools
+from app.vector_store import create_vector_store
+from app.tools import calculator_agent
 
 
 async def main():
