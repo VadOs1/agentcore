@@ -1,21 +1,15 @@
 import os
-from bedrock_agentcore import BedrockAgentCoreApp
 from dotenv import load_dotenv
 from strands import Agent
 from strands.tools.mcp import MCPClient
 from mcp import stdio_client, StdioServerParameters
-import asyncio
-
-
-app = BedrockAgentCoreApp()
 
 NAMING_SYSTEM_PROMPT = """
 You are an expert in GitHub and you can check any Pull Request and provide valuable feedback.
 """
 
 
-@app.entrypoint
-def start(payload):
+def start(payload={}):
     user_message = payload.get("prompt", "Hi")
 
     github_mcp_client = MCPClient(
@@ -47,4 +41,4 @@ def start(payload):
 
 if __name__ == "__main__":
     load_dotenv()
-    app.run()
+    start()
