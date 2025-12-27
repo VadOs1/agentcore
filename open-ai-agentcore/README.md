@@ -1,7 +1,5 @@
 ## open-ai-agentcore
 
-python ./open-ai-agentcore/src/0_local.py
-
 #### Amazon Bedrock AgentCore Documentation https://docs.aws.amazon.com/bedrock-agentcore/
 
 #### Amazon Bedrock AgentCore Samples https://github.com/awslabs/amazon-bedrock-agentcore-samples/tree/main
@@ -28,6 +26,22 @@ curl https://api.openai.com/v1/vector_stores/{id} \
   -H "OpenAI-Beta: assistants=v2" \
   -X DELETE
 ```
+
+- Run script from local
+```python
+python ./open-ai-agentcore/src/0_local.py 
+```
+
+
+
+
+
+
+
+!!!!!!!!
+
+
+
 
 - AgentCore Invoke Local
 
