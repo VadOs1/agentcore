@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 from app.dragon_family_guard_rail import guardrail
-from app.vector_store import create_vector_store, get_vector_store_id
+from app.vector_store import get_vector_store_id
 from app.calculator_tool import calculator
 
 app = BedrockAgentCoreApp()
