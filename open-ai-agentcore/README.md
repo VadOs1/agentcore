@@ -37,4 +37,11 @@ python ./open-ai-agentcore/0_local.py
 - manually delete agentcore memory
 ```
 
+- Invoke Amazon Bedrock AgentCore from python script
+```python
+python ./open-ai-agentcore/2_invoke.py
+```
+
+
+
 
