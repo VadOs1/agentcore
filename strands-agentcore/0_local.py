@@ -10,7 +10,7 @@ You are an expert in GitHub and you can check any Pull Request and provide valua
 
 
 def start(payload={}):
-    user_message = payload.get("prompt", "List all my personal GitHub repositories.")
+    user_message = payload.get("prompt", "List all my personal private GitHub repositories. Github username vados1")
 
     github_mcp_client = MCPClient(
         lambda: stdio_client(
@@ -28,6 +28,7 @@ def start(payload={}):
 
     with github_mcp_client:
         github_tool_list = github_mcp_client.list_tools_sync()
+        print("Available GitHub tools:", github_tool_list)
 
         naming_agent = Agent(
             system_prompt=NAMING_SYSTEM_PROMPT,
@@ -40,5 +41,5 @@ def start(payload={}):
 
 
 if __name__ == "__main__":
-    load_dotenv()
+    load_dotenv(override=True)
     start()
