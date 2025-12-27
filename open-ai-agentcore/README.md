@@ -31,7 +31,7 @@ python ./open-ai-agentcore/src/0_local.py
 - sudo ./aws/install
 - aws configure
 - source ./open-ai-agentcore/.env
-- agentcore configure -e ./open-ai-agentcore/src/1_agent_core.py 
+- agentcore configure -e ./open-ai-agentcore/1_agent_core.py 
 - agentcore launch --auto-update-on-conflict --env OPENAI_API_KEY=$OPENAI_API_KEY
 - agentcore invoke '{\"prompt\": \"Hi"}'
 - agentcore destroy
