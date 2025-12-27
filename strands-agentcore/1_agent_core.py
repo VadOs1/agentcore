@@ -14,7 +14,10 @@ You are an expert in GitHub and you can check any Pull Request and provide valua
 
 @app.entrypoint
 def start(payload):
-    user_message = payload.get("prompt", "List all my personal private GitHub repositories. Github username vados1. You are authenticated to github")
+    user_message = payload.get(
+        "prompt",
+        "List all my personal private GitHub repositories. Github username vados1. You are authenticated to github",
+    )
 
     github_mcp_client = MCPClient(
         lambda: stdio_client(
