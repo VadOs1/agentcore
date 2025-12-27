@@ -1,7 +1,9 @@
 import os
-
+from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
 from agents import (
+    FileSearchTool,
     InputGuardrailTripwireTriggered,
+    WebSearchTool,
 )
 from agents import (
     Runner,
@@ -12,15 +14,9 @@ from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from open_ai.constants import (
-    vector_store_name,
-    main_agent_name,
-    main_agent_instructions,
-)
-from open_ai.guard_rails import guardrail
-from open_ai.open_ai_tools import get_open_ai_tools
-from open_ai.open_ai_vector_store import create_vector_store
-from open_ai.tools import calculator_agent
+from app.dragon_family_guard_rail import guardrail
+from app.vector_store import create_vector_store, get_vector_store_id
+from app.calculator_tool import calculator
 
 app = BedrockAgentCoreApp()
 
@@ -41,14 +37,24 @@ if __name__ == "__main__":
     load_dotenv()
     api_key = os.environ.get("OPENAI_API_KEY")
     client = OpenAI(api_key=api_key)
-    vector_store_id = create_vector_store(client, vector_store_name)
-    web_search, file_search = get_open_ai_tools(client, vector_store_name)
+    vector_store_id = create_vector_store(client)
     data_agent = Agent(
-        name=main_agent_name,
-        instructions=main_agent_instructions,
-        tools=[web_search, file_search],
+        name="The Dragons Reckoning Agent",
+        instructions=(
+            f"{RECOMMENDED_PROMPT_PREFIX}\n"
+            "You are The Dragon from The Dragon's Reckoning. Be precise and concise (≤3 sentences).\n"
+            "Use file_search for questions about Dragons Reckoning, and web_search for current facts on the public web.\n"
+            "If the user asks for arithmetic or numeric computation, HAND OFF to the Calculator agent."
+        ),
+        tools=[
+            WebSearchTool(),
+            FileSearchTool(
+                vector_store_ids=[get_vector_store_id(client=client)],
+                max_num_results=3,
+            ),
+        ],
         input_guardrails=[guardrail],
-        handoffs=[calculator_agent],
+        handoffs=[calculator],
         model_settings=ModelSettings(temperature=0),
     )
 
