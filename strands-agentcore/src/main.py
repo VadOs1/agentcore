@@ -13,10 +13,11 @@ NAMING_SYSTEM_PROMPT = """
 You are an expert in GitHub and you can check any Pull Request and provide valuable feedback.
 """
 
+
 @app.entrypoint
 def start(payload):
     user_message = payload.get("prompt", "Hi")
-    
+
     github_mcp_client = MCPClient(
         lambda: stdio_client(
             StdioServerParameters(
@@ -33,16 +34,16 @@ def start(payload):
 
     with github_mcp_client:
         github_tool_list = github_mcp_client.list_tools_sync()
-        
+
         naming_agent = Agent(
             system_prompt=NAMING_SYSTEM_PROMPT,
             model="us.anthropic.claude-sonnet-4-20250514-v1:0",  # Use inference profile
             tools=github_tool_list,
         )
-        
+
         result = naming_agent(user_message)
         return {"result": result}
 
-    
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run()

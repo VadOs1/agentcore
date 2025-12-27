@@ -4,13 +4,19 @@ from agents import (
     InputGuardrailTripwireTriggered,
 )
 from agents import (
-    Runner, Agent, ModelSettings,
+    Runner,
+    Agent,
+    ModelSettings,
 )
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from dotenv import load_dotenv
 from openai import OpenAI
 
-from open_ai.constants import vector_store_name, main_agent_name, main_agent_instructions
+from open_ai.constants import (
+    vector_store_name,
+    main_agent_name,
+    main_agent_instructions,
+)
 from open_ai.guard_rails import guardrail
 from open_ai.open_ai_tools import get_open_ai_tools
 from open_ai.open_ai_vector_store import create_vector_store
@@ -31,9 +37,9 @@ async def invoke(payload):
     return {"result": output}
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     load_dotenv()
-    api_key = os.environ.get('OPENAI_API_KEY')
+    api_key = os.environ.get("OPENAI_API_KEY")
     client = OpenAI(api_key=api_key)
     vector_store_id = create_vector_store(client, vector_store_name)
     web_search, file_search = get_open_ai_tools(client, vector_store_name)
