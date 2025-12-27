@@ -38,20 +38,3 @@ python ./open-ai-agentcore/0_local.py
 ```
 
 
-
-
-
-
-- AgentCore Invoke Local
-
-```
-curl --location 'localhost:8080/invocations' \
---header 'Content-Type: application/json' \
---data '{
-    "prompt": "hi"
-}'
-```
-
-
-
-
