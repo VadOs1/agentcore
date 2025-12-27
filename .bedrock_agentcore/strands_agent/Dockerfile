@@ -21,6 +21,8 @@ RUN uv pip install -r requirements.txt
 
 RUN uv pip install aws-opentelemetry-distro>=0.10.1
 
+# Install Node.js and npm (includes npx)
+RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
 
 # Signal that this is running in Docker for host binding logic
 ENV DOCKER_CONTAINER=1
