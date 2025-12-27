@@ -26,14 +26,38 @@ def start(payload={}):
         startup_timeout=30,
     )
 
-    with github_mcp_client:
+    atlassin_mcp_client = MCPClient(
+        lambda: stdio_client(
+            StdioServerParameters(
+                command="npx",
+                args=["-y", 
+                      "mcp-remote",
+                      "https://mcp.atlassian.com/v1/sse",
+                      "--transport",
+                      "sse-only"],
+                env={
+                    **dict(os.environ),
+                    "ATLASSIAN_API_TOKEN": os.environ.get("ATLASSIAN_API_TOKEN"),
+                    "ATLASSIAN_EMAIL": os.environ.get("ATLASSIAN_EMAIL"),
+                },
+            )
+        ),
+        startup_timeout=30,
+    )
+
+    with github_mcp_client, atlassin_mcp_client:
         github_tool_list = github_mcp_client.list_tools_sync()
         print("Available GitHub tools:", github_tool_list)
+
+        atlassin_tool_list = atlassin_mcp_client.list_tools_sync()
+        print("Available Atlassian tools:", atlassin_tool_list)
+
+        tools = github_tool_list + atlassin_tool_list
 
         naming_agent = Agent(
             system_prompt=NAMING_SYSTEM_PROMPT,
             model="us.anthropic.claude-sonnet-4-20250514-v1:0",  # Use inference profile
-            tools=github_tool_list,
+            tools=tools,
         )
 
         result = naming_agent(user_message)
