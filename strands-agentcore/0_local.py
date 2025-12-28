@@ -1,16 +1,20 @@
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 from strands import Agent
 from strands.tools.mcp import MCPClient
 from mcp import stdio_client, StdioServerParameters
 
 NAMING_SYSTEM_PROMPT = """
-You are an expert in GitHub and you can check any Pull Request and provide valuable feedback.
+You are an expert in GitHub and you can check any Pull Request and provide valuable feedback. You are also an expert in Atlassin Jira and Confluence products and can help users to manage their tasks and documentation effectively.
 """
 
 
 def start(payload={}):
-    user_message = payload.get("prompt", "List all my personal private GitHub repositories. Github username vados1. You are authenticated to github")
+    user_message = payload.get(
+        "prompt",
+        "List all my personal private GitHub repositories. Github username vados1. You are authenticated to github. Check KAN-1 Jira ticket and provide a summary of its current status and any pending actions required.",
+    )
 
     github_mcp_client = MCPClient(
         lambda: stdio_client(
@@ -26,33 +30,35 @@ def start(payload={}):
         startup_timeout=30,
     )
 
-    atlassin_mcp_client = MCPClient(
+    atlassian_mcp_client = MCPClient(
         lambda: stdio_client(
             StdioServerParameters(
-                command="npx",
-                args=["-y", 
-                      "mcp-remote",
-                      "https://mcp.atlassian.com/v1/sse",
-                      "--transport",
-                      "sse-only"],
-                env={
-                    **dict(os.environ),
-                    "ATLASSIAN_API_TOKEN": os.environ.get("ATLASSIAN_API_TOKEN"),
-                    "ATLASSIAN_EMAIL": os.environ.get("ATLASSIAN_EMAIL"),
-                },
+                command="docker",
+                args=[
+                    "run",
+                    "--rm",
+                    "-i",
+                    "-e", f"JIRA_USERNAME={os.environ.get('ATLASSIAN_EMAIL')}",
+                    "-e", f"JIRA_API_TOKEN={os.environ.get('ATLASSIAN_API_TOKEN')}",
+                    "-e", f"JIRA_URL={os.environ.get('JIRA_URL')}",
+                    "-e", f"CONFLUENCE_USERNAME={os.environ.get('ATLASSIAN_EMAIL')}",
+                    "-e", f"CONFLUENCE_API_TOKEN={os.environ.get('ATLASSIAN_API_TOKEN')}",
+                    "-e", f"CONFLUENCE_URL={os.environ.get('CONFLUENCE_URL')}",
+                    "ghcr.io/sooperset/mcp-atlassian:latest",
+                ],
             )
         ),
         startup_timeout=30,
     )
 
-    with github_mcp_client, atlassin_mcp_client:
+    with github_mcp_client, atlassian_mcp_client:
         github_tool_list = github_mcp_client.list_tools_sync()
         print("Available GitHub tools:", github_tool_list)
 
-        atlassin_tool_list = atlassin_mcp_client.list_tools_sync()
-        print("Available Atlassian tools:", atlassin_tool_list)
+        atlassian_tool_list = atlassian_mcp_client.list_tools_sync()
+        print("Available Atlassian tools:", atlassian_tool_list)
 
-        tools = github_tool_list + atlassin_tool_list
+        tools = github_tool_list + atlassian_tool_list
 
         naming_agent = Agent(
             system_prompt=NAMING_SYSTEM_PROMPT,
