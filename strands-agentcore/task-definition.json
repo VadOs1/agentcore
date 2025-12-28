@@ -1,0 +1,53 @@
+{
+  "family": "mcp-atlassian-server",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::YOUR_ACCOUNT:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "mcp-atlassian",
+      "image": "ghcr.io/sooperset/mcp-atlassian:latest",
+      "portMappings": [
+        {
+          "containerPort": 9000,
+          "protocol": "tcp"
+        }
+      ],
+      "command": [
+        "--transport",
+        "sse",
+        "--port",
+        "9000",
+        "-vv"
+      ],
+      "environment": [
+        {
+          "name": "ATLASSIAN_DOMAIN",
+          "value": "your-domain.atlassian.net"
+        },
+        {
+          "name": "ATLASSIAN_EMAIL",
+          "value": "your-email@example.com"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "ATLASSIAN_API_TOKEN",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT:secret:atlassian-api-token-xxxxx"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/mcp-atlassian",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "essential": true
+    }
+  ]
+}
